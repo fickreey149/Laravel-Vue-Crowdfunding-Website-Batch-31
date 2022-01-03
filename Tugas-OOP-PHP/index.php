@@ -32,7 +32,7 @@ trait Fight
         echo "=============================================== <br>";
         $darahBerkurang = $hewan->attackPower / $this->defencePower;
         $this->darah = $this->darah - ($darahBerkurang);
-        echo "News : Ini menyebabkan darah $this->nama berkurang sejumlah $darahBerkurang <br>";
+        echo "News : Darah $this->nama berkurang sejumlah $darahBerkurang <br>";
         echo "=============================================== <br>";
         echo "News : Darah $this->nama tersisa $this->darah <br>";
         echo "=============================================== <br><br>";
@@ -59,8 +59,9 @@ class Elang extends Hewan
             "Darah : $this->darah <br>" .
             "Jumlah Kaki : $this->jumlahKaki <br>" .
             "Keahlian : $this->keahlian <br>" .
-            "Nama : $this->attackPower <br>" .
-            "Nama : $this->defencePower <br><br>";
+            "Power Attack : $this->attackPower <br>" .
+            "Defence Power : $this->defencePower <br>" .
+            "====================== <br><br>";
     }
 }
 
@@ -84,8 +85,9 @@ class Harimau extends Hewan
             "Darah : $this->darah <br>" .
             "Jumlah Kaki : $this->jumlahKaki <br>" .
             "Keahlian : $this->keahlian <br>" .
-            "Nama : $this->attackPower <br>" .
-            "Nama : $this->defencePower <br><br>";
+            "Power Attack : $this->attackPower <br>" .
+            "Defence Power : $this->defencePower <br>" .
+            "====================== <br><br>";
     }
 }
 
