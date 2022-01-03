@@ -11,7 +11,9 @@ abstract class Hewan
 
     public function atraksi()
     {
-        return $this->nama . ' sedang ' . $this->keahlian;
+        $news = 'News : ' . $this->nama . ' sedang ' . $this->keahlian . '<br>' .
+            '==============================<br>';
+        echo $news;
     }
 }
 
@@ -96,6 +98,9 @@ $harimau = new Harimau('Harimau Gokil');
 
 echo $harimau->getInfoHewan();
 echo $elang->getInfoHewan();
+
+$harimau->atraksi();
+$elang->atraksi();
 
 $elang->serang($harimau);
 echo $harimau->getInfoHewan();
