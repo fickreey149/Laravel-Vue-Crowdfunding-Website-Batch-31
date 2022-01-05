@@ -58,4 +58,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'role_id', 'id');
     }
+
+    public function isVerification()
+    {
+        return $this->email_verified_at == null ? false : true;
+    }
+
+    public function isAdmin()
+    {
+        return $this->role->name == 'admin' ? true : false;
+    }
 }
