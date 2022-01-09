@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddFieldToUsersTable extends Migration
+class AddPhotoToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class AddFieldToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->uuid('role_id')->after('password')->nullable();;
-            $table->foreign('role_id')->references('id')->on('roles');
+            $table->string('photo')->after('password')->nullable();
         });
     }
 
@@ -27,8 +26,7 @@ class AddFieldToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign('users_role_id_foreign');
-            $table->dropColumn('role_id');
+            $table->dropColumn('photo');
         });
     }
 }

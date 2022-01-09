@@ -14,7 +14,7 @@ class CreateOtpCodesTable extends Migration
     public function up()
     {
         Schema::create('otp_codes', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('id')->primary();
             $table->string('otp');
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users');
