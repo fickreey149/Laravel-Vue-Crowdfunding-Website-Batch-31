@@ -14,9 +14,9 @@ use Illuminate\Http\Request;
 */
 
 Route::namespace('Auth')->group(function () {
-    Route::post('/register', 'AuthController@register');
-    Route::post('/verification', 'AuthController@verification');
-    Route::post('/regenerate', 'AuthController@regenerate');
+    Route::post('/register', 'RegisterController');
+    Route::post('/verification', 'VerificationController');
+    Route::post('/regenerate', 'RegenerateController');
     Route::post('/update-password', 'AuthController@update_password')->middleware('email-verify');
     Route::post('/login', 'LoginController')->middleware('email-verify');
 });
