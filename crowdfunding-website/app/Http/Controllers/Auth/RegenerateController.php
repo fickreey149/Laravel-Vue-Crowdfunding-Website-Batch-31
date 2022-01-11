@@ -40,12 +40,7 @@ class RegenerateController extends Controller
             ]);
         }
 
-        $otp_codes->update([
-            'otp' => random_int(100000, 999999),
-            'valid_until' => Carbon::now()->addMinutes(5)
-        ]);
-
-        $otp_codes->save();
+        $user->generateOtpCode();
 
         return response()->json([
             'response_code' => '00',

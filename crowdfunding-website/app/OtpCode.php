@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\UserRegisteredEvent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -21,6 +22,10 @@ class OtpCode extends Model
             if (empty($model->{$model->getKeyName()})) {
                 $model->{$model->getKeyName()} = Str::uuid();
             }
+        });
+
+        static::created(function ($model) {
+            event(new UserRegisteredEvent($model->user));
         });
     }
 

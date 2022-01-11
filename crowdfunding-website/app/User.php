@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
@@ -34,6 +35,10 @@ class User extends Authenticatable implements JWTSubject
             if (empty($model->{$model->getKeyName()})) {
                 $model->{$model->getKeyName()} = Str::uuid();
             }
+        });
+
+        static::created(function ($model) {
+            $model->generateOtpCode();
         });
     }
 
@@ -93,5 +98,16 @@ class User extends Authenticatable implements JWTSubject
     public function isAdmin()
     {
         return $this->role->name == 'admin' ? true : false;
+    }
+
+    public function generateOtpCode()
+    {
+        $this->otp_code()->updateOrCreate(
+            ['user_id' => $this->id],
+            [
+                'otp' => random_int(100000, 999999),
+                'valid_until' => Carbon::now()->addMinutes(5)
+            ]
+        );
     }
 }
