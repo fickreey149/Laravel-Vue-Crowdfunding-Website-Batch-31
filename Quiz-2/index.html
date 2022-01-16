@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model:value="newUser" />
+        <button @click=addUser>{{ button }}</button>
+        <ul>
+            <li v-for="item in users">
+                {{ item.name }}
+                <button @click="editUser(item.name)">Edit</button> || <button @click="deleteUser(item.name)">Delete</button>
+            </li>
+        </ul>
+
+        </div>
+    </div>
+      
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+     var app = new Vue({
+        el: '#app',
+        data: {
+            newUser: "",
+            users : [
+                { name : 'Muhammad Iqbal Mubarok'},
+                { name : 'Ruby Purwanti'},
+                { name : 'Faqih Muhammad'},
+            ],
+            button : "Add",
+            editable : ""
+        },
+        methods : {
+            addUser : function () {
+                for (let i = 0; i < this.users.length; i++) {
+                    if (this.users[i].name == this.editable) {
+                        var u = true
+                        this.users[i].name = this.newUser
+                        this.button = "Add"
+                    }
+                }
+                if (!u && this.newUser != "") {
+                    this.users.push({name : this.newUser})
+                }
+                this.newUser =""
+                this.editable =""
+            },
+            editUser : function (params) {
+                for (let i = 0; i < this.users.length; i++) {
+                    if (this.users[i].name == params) {
+                        this.newUser = params
+                        this.editable = params
+                    }
+                }
+                this.button = "Update"
+                
+            },
+            deleteUser : function (params) {
+                for (let i = 0; i < this.users.length; i++) {
+                    if (this.users[i].name == params) {
+                        if (confirm("Anda Yakin ?") == true) {
+                            this.users.splice(i, 1);
+                        }
+                    }
+                }
+            }
+        }
+    })
+    </script>
+</body>
+</html>
