@@ -11,9 +11,9 @@
         <input type="text" v-model:value="newUser" />
         <button @click=addUser>{{ button }}</button>
         <ul>
-            <li v-for="item in users">
+            <li v-for="(item, index) in users">
                 {{ item.name }}
-                <button @click="editUser(item.name)">Edit</button> || <button @click="deleteUser(item.name)">Delete</button>
+                <button @click="editUser(index)">Edit</button> || <button @click="deleteUser(index)">Delete</button>
             </li>
         </ul>
 
@@ -32,40 +32,34 @@
                 { name : 'Faqih Muhammad'},
             ],
             button : "Add",
-            editable : ""
+            editable : false,
+            id : null
         },
         methods : {
             addUser : function () {
-                for (let i = 0; i < this.users.length; i++) {
-                    if (this.users[i].name == this.editable) {
-                        var u = true
-                        this.users[i].name = this.newUser
-                        this.button = "Add"
-                    }
+                if (this.newUser == "") {
+                    return alert("Form tidak boleh kosong")
                 }
-                if (!u && this.newUser != "") {
+                if (this.editable) {
+                    this.users[this.id].name = this.newUser
+                    this.button = "Add"
+                } else {
                     this.users.push({name : this.newUser})
                 }
-                this.newUser =""
-                this.editable =""
+                this.newUser = ""
+                this.editable = false
+                this.id = null
             },
             editUser : function (params) {
-                for (let i = 0; i < this.users.length; i++) {
-                    if (this.users[i].name == params) {
-                        this.newUser = params
-                        this.editable = params
-                    }
-                }
+                this.newUser = this.users[params].name
+                this.id = params
+                this.editable = true
                 this.button = "Update"
                 
             },
             deleteUser : function (params) {
-                for (let i = 0; i < this.users.length; i++) {
-                    if (this.users[i].name == params) {
-                        if (confirm("Anda Yakin ?") == true) {
-                            this.users.splice(i, 1);
-                        }
-                    }
+                if (confirm("Anda Yakin ?") == true) {
+                    this.users.splice(params, 1);
                 }
             }
         }
