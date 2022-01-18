@@ -27,7 +27,7 @@
           background-color: #15172b;
           border-radius: 20px;
           box-sizing: border-box;
-          height: 600px;
+          min-height: 600px;
           padding: 20px;
           width: 320px;
         }
@@ -177,6 +177,43 @@
           background-color: #06b;
         }
 
+        .update {
+          background-color: #08d;
+          border-radius: 12px;
+          border: 0;
+          box-sizing: border-box;
+          color: #eee;
+          cursor: pointer;
+          font-size: 18px;
+          height: 50px;
+          margin-top: 38px;
+          margin-left: 5px;
+          text-align: center;
+          width: 48%;
+        }
+
+        .update:active {
+          background-color: #06b;
+        }
+
+        .cancel {
+          background-color: rgb(255, 255, 255);
+          border-radius: 12px;
+          border: 0;
+          box-sizing: border-box;
+          color: rgb(0, 0, 0);
+          cursor: pointer;
+          font-size: 18px;
+          height: 50px;
+          margin-top: 38px;
+          text-align: center;
+          width: 48%;
+        }
+
+        .cancel:active {
+          background-color: rgb(232, 234, 236);
+        }
+
 
         /* table */
         
@@ -232,6 +269,7 @@
         .responsive-table .table-header {
           background-color: #15172b;
           color: #ffffff;
+          border-radius: 10px;
           font-size: 14px;
           text-align: center;
           text-transform: uppercase;
@@ -239,6 +277,7 @@
         }
         .responsive-table .table-row {
           text-align: center;
+          align-items: center;
           background-color: #ffffff;
           box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
         }
@@ -259,20 +298,24 @@
         }
         .responsive-table .col-6 {
           flex-basis: 20%;
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
         }
         .responsive-table li {
             border-radius: 3px;
             padding: 25px 30px;
             display: flex;
             justify-content: space-between;
-            margin-bottom: 25px;
+            margin-bottom: 5px;
         }
         .edit {
-          background-color: rgb(247, 28, 28);
+          background-color: rgb(232, 247, 28);
           border-radius: 9px;
           border: 0;
           box-sizing: border-box;
-          color: #eee;
+          color: rgb(0, 0, 0);
+          margin-right: 2px;
           cursor: pointer;
           font-size: 14px;
           height: 30px;
@@ -281,8 +324,44 @@
         }
 
         .edit:active {
-          background-color: rgb(247, 84, 35);
+          background-color: rgb(240, 237, 85);
         }
+
+        .hapus {
+          background-color: rgb(240, 33, 33);
+          border-radius: 9px;
+          border: 0;
+          box-sizing: border-box;
+          color: #eee;
+          margin-right: 2px;
+          cursor: pointer;
+          font-size: 14px;
+          height: 30px;
+          text-align: center;
+          width: 30%;
+        }
+
+        .hapus:active {
+          background-color: rgb(168, 14, 14);
+        }
+
+        .upload {
+          background-color: rgb(71, 33, 240);
+          border-radius: 9px;
+          border: 0;
+          box-sizing: border-box;
+          color: #eee;
+          cursor: pointer;
+          font-size: 14px;
+          height: 30px;
+          text-align: center;
+          width: 40%;
+        }
+
+        .upload:active {
+          background-color: rgb(12, 23, 114);
+        }
+
     </style>
 </head>
 <body>
@@ -290,29 +369,46 @@
         <h2>Members Table <small>Ajax Task</small></h2>
 
         <div class="container">
-            <form @submit.prevent="submitForm()" class="form">
+            <div>
+              <form @submit.prevent="submitForm()" class="form">
                 <div class="title">Member Form</div>
-                <div class="subtitle">Jadilan member baru!</div>
+                <div class="subtitle">Jadilah member baru!</div>
                 <ul v-if="errors.length">
-                    <li v-for="error in errors" style="color: darkred;">{{ error }}</li>
+                    <li v-for="error in errors" style="color: rgb(248, 62, 87);">{{ error }}</li>
                 </ul>
                 <div class="input-container ic1">
-                  <input id="name" class="input" type="text" placeholder=" " v-model="name" ref="name" />
+                  <input id="name" class="input" type="text" :disabled="buttonStatus == 'upload'" placeholder=" " v-model="name" ref="name" />
                   <div class="cut"></div>
                   <label for="name" class="placeholder">Name</label>
                 </div>
                 <div class="input-text-area-container ic2">
-                  <textarea id="address" class="input-text-area" placeholder=" " v-model="address" ref="address"> </textarea>
+                  <textarea id="address" class="input-text-area" :disabled="buttonStatus == 'upload'" placeholder=" " v-model="address" ref="address"> </textarea>
                   <div class="cut"></div>
                   <label for="address" class="placeholder">Address</label>
                 </div>
                 <div class="input-container ic2">
-                    <input id="no_hp" class="input" type="text" placeholder=" " v-model="no_hp" ref="name" ref="no_hp" />
+                    <input id="no_hp" class="input" type="text" :disabled="buttonStatus == 'upload'" placeholder=" " v-model="no_hp" ref="name" ref="no_hp" />
                     <div class="cut"></div>
                     <label for="no_hp" class="placeholder">Phone Number</label>
                 </div>
-                <button type="submit" class="submit">submit</button>
-            </form>
+                <div class="input-container ic2" v-if="buttonStatus == 'upload'">
+                  <input id="photo_profile" class="input" type="file" placeholder=" " ref="photo_profile" />
+                  <div class="cut"></div>
+                  <label for="photo_profile" class="placeholder">Photo Profile</label>
+                </div>
+                <div v-if="buttonStatus == 'submit'">
+                  <button type="submit" class="submit">submit</button>
+                </div>
+                <div v-if="buttonStatus == 'update'">
+                  <button type="button" @click="updateData(dataId)" class="update">update</button>
+                  <button type="button" @click="clearData" class="cancel">cancel</button>
+                </div>
+                <div v-if="buttonStatus == 'upload'">
+                  <button type="button"@click="uploadPhoto(dataId)" class="update">upload</button>
+                  <button type="button" @click="clearData" class="cancel">cancel</button>
+                </div>
+              </form>
+            </div>
 
             <div class="table">
                 <ul class="responsive-table">
@@ -333,7 +429,9 @@
                       <div class="col col-4" data-label="Address">{{ member.address }}</div>
                       <div class="col col-5" data-label="Phone Number">{{ member.no_hp }}</div>
                       <div class="col col-6" data-label="Action">
-                          <button class="edit">Edit</button>
+                          <button class="edit" @click="editData(member)">Edit</button>
+                          <button class="hapus" @click="deleteData(member.id)">Hapus</button>
+                          <button class="upload" @click="addPhoto(member)">+ Photo</button>
                       </div>
                     </li>
                 </ul>
@@ -353,8 +451,10 @@
             address : '',
             no_hp : '',
             photo_profile : '',
+            dataId : null,
             members : [],
             errors : [],
+            buttonStatus : 'submit',
             photoDomain : "http://demo-api-vue.sanbercloud.com"
         },
         methods : {
@@ -386,51 +486,130 @@
                 this.name = ''
                 this.address = ''
                 this.no_hp = ''
+                this.buttonStatus = 'submit',
+                this.photo_profile = '',
+                this.dataId = null
             },
 
             submitForm : function () {
                 this.validationForm()
                 if (this.errors.length === 0) {
-                    let formData = new FormData()
-                    formData.append('name', this.name)
-                    formData.append('address', this.address)
-                    formData.append('no_hp', this.no_hp)
-
-                    const config = {
-                        method : "post",
-                        url : "http://demo-api-vue.sanbercloud.com/api/member",
-                        data : formData
-                    }
-
-                    axios(config)
-                        .then( (response) => {
-                            this.clearData()
-                            this.getMembers()
-                            alert(response.data.message)
-                        })
-                        .catch( (error) => {
-                            console.log(error)
-                        })
+                  let formData = new FormData()
+                  formData.append('name', this.name)
+                  formData.append('address', this.address)
+                  formData.append('no_hp', this.no_hp)
+                  const config = {
+                      method : "post",
+                      url : "http://demo-api-vue.sanbercloud.com/api/member",
+                      data : formData
+                  }
+                  axios(config)
+                      .then( (response) => {
+                          this.clearData()
+                          this.getData()
+                          alert(response.data.message)
+                      })
+                      .catch( (error) => {
+                          console.log(error)
+                      })
                 }
             },
-
-            getMembers : function () {
+            getData : function () {
+              const config = {
+                  method : "get",
+                  url : "http://demo-api-vue.sanbercloud.com/api/member"
+              }
+              axios(config)
+                  .then( (response) => {
+                      this.members = response.data.members
+                  })
+                  .catch( () => {
+                      console.log(error)
+                  })
+            },
+            deleteData : function (id) {
+              if (confirm("Want to delete?")) {
                 const config = {
-                    method : "get",
-                    url : "http://demo-api-vue.sanbercloud.com/api/member"
+                  method : "post",
+                  url : `http://demo-api-vue.sanbercloud.com/api/member/${id}`,
+                  params : { _method : "DELETE" }
                 }
+                axios(config)
+                  .then( (response) => {
+                    this.getData()
+                    alert(response.data.message)
+                  })
+                  .catch( () => {
+                      console.log(error)
+                  })
+              }
+              
+            },
+            editData : function (member) {
+              this.name = member.name
+              this.address = member.address
+              this.no_hp = member.no_hp
+              this.dataId = member.id
+              this.buttonStatus = 'update'
+            },
+            updateData : function (id) {
+              this.validationForm()
+              if (this.errors.length === 0) {
+                let formData = new FormData()
+                formData.append('name', this.name)
+                formData.append('address', this.address)
+                formData.append('no_hp', this.no_hp)
 
+                const config = {
+                    method : "post",
+                    url : `http://demo-api-vue.sanbercloud.com/api/member/${id}`,
+                    params : { _method : "PUT" },
+                    data : formData
+                }
+                
                 axios(config)
                     .then( (response) => {
-                        this.members = response.data.members
+                        this.clearData()
+                        this.getData()
+                        alert(response.data.message)
                     })
-                    .catch( () => {
+                    .catch( (error) => {
                         console.log(error)
                     })
+              }
+            },
+            addPhoto : function (member) {
+              this.name = member.name
+              this.address = member.address
+              this.no_hp = member.no_hp
+              this.dataId = member.id
+              this.buttonStatus = 'upload'
+            },
+            uploadPhoto : function (id) {
+              let file = this.$refs.photo_profile.files[0]
+              let formData = new FormData()
+              formData.append('photo_profile', file)
+
+              const config = {
+                method : "post",
+                url : `http://demo-api-vue.sanbercloud.com/api/member/${id}/upload-photo-profile`,
+                data : formData
+              }
+
+              axios(config)
+                .then( (response) => {
+                    this.clearData()
+                    this.getData()
+                    alert(response.data.message)
+                })
+                .catch( (error) => {
+                    console.log(error)
+                })
             }
+
         },
         created() {
-            this.getMembers()
+            this.getData()
         }
     })
     </script>
