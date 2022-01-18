@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: 'lato', sans-serif;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+          max-width: 100%;
+          margin-left: auto;
+          margin-right: auto;
+          padding-left: 10px;
+          padding-right: 10px;
+          display: flex;
+          justify-content: center;
+        }
+
+        /* Form */
+
+        .form {
+          background-color: #15172b;
+          border-radius: 20px;
+          box-sizing: border-box;
+          height: 600px;
+          padding: 20px;
+          width: 320px;
+        }
+
+        .title {
+          color: #eee;
+          font-family: sans-serif;
+          font-size: 36px;
+          font-weight: 600;
+          margin-top: 30px;
+        }
+
+        .subtitle {
+          color: #eee;
+          font-family: sans-serif;
+          font-size: 16px;
+          font-weight: 600;
+          margin-top: 10px;
+        }
+
+        .input-container {
+          height: 50px;
+          position: relative;
+          width: 100%;
+        }
+
+        .input-text-area-container {
+          height: 120px;
+          position: relative;
+          width: 100%;
+        }
+
+        .ic1 {
+          margin-top: 40px;
+        }
+
+        .ic2 {
+          margin-top: 30px;
+        }
+
+        .input {
+          background-color: #303245;
+          border-radius: 12px;
+          border: 0;
+          box-sizing: border-box;
+          color: #eee;
+          font-size: 18px;
+          height: 100%;
+          outline: 0;
+          padding: 4px 20px 0;
+          width: 100%;
+        }
+
+        .input-text-area {
+          background-color: #303245;
+          border-radius: 12px;
+          border: 0;
+          box-sizing: border-box;
+          color: #eee;
+          font-size: 18px;
+          height: 100%;
+          outline: 0;
+          padding: 4px 20px 0;
+          width: 100%;
+          margin-bottom: 10px;
+        }
+
+        .cut {
+          background-color: #15172b;
+          border-radius: 10px;
+          height: 20px;
+          left: 20px;
+          position: absolute;
+          top: -20px;
+          transform: translateY(0);
+          transition: transform 200ms;
+          width: 50%;
+        }
+
+        .cut-short {
+          width: 50px;
+        }
+
+        .input:focus ~ .cut,
+        .input:not(:placeholder-shown) ~ .cut {
+          transform: translateY(8px);
+        }
+
+        .input-text-area:focus ~ .cut,
+        .input-text-area:not(:placeholder-shown) ~ .cut {
+          transform: translateY(8px);
+        }
+
+        .placeholder {
+          color: #65657b;
+          font-family: sans-serif;
+          left: 20px;
+          line-height: 14px;
+          pointer-events: none;
+          position: absolute;
+          transform-origin: 0 50%;
+          transition: transform 200ms, color 200ms;
+          top: 20px;
+        }
+
+        .input:focus ~ .placeholder,
+        .input:not(:placeholder-shown) ~ .placeholder {
+          transform: translateY(-30px) translateX(10px) scale(0.75);
+        }
+
+        .input:not(:placeholder-shown) ~ .placeholder {
+          color: #808097;
+        }
+
+        .input:focus ~ .placeholder {
+          color: #ffffff;
+        }
+
+        .input-text-area:focus ~ .placeholder,
+        .input-text-area:not(:placeholder-shown) ~ .placeholder {
+          transform: translateY(-30px) translateX(10px) scale(0.75);
+        }
+
+        .input-text-area:not(:placeholder-shown) ~ .placeholder {
+          color: #808097;
+        }
+
+        .input-text-area:focus ~ .placeholder {
+          color: #ffffff;
+        }
+
+        .submit {
+          background-color: #08d;
+          border-radius: 12px;
+          border: 0;
+          box-sizing: border-box;
+          color: #eee;
+          cursor: pointer;
+          font-size: 18px;
+          height: 50px;
+          margin-top: 38px;
+          text-align: center;
+          width: 100%;
+        }
+
+        .submit:active {
+          background-color: #06b;
+        }
+
+
+        /* table */
+        
+        h2 {
+          font-size: 26px;
+          margin: 20px 0;
+          text-align: center;
+          
+        }
+
+        h2 small {
+            font-size: 0.5em;
+        }
+
+        .table {
+            padding: 0;
+            width: 70%;
+        }
+
+        .responsive-table {
+            width: 100%;
+            border-radius: 50%;
+            margin-top: 0px;
+        }
+
+        @media all and (max-width: 1200px) {
+            .responsive-table .table-header {
+              display: none;
+            }
+
+            .responsive-table li {
+              display: block;
+            }
+            .responsive-table .col {
+            
+              flex-basis: 100%;
+            
+            }
+            .responsive-table .col {
+              display: flex;
+              padding: 10px 0;
+              
+            }
+            .responsive-table .col :before {
+                color: #6C7A89;
+                padding-right: 10px;
+                content: attr(data-label);
+                flex-basis: 50%;
+                text-align: center;
+            }
+          }
+
+        .responsive-table .table-header {
+          background-color: #15172b;
+          color: #ffffff;
+          font-size: 14px;
+          text-align: center;
+          text-transform: uppercase;
+          letter-spacing: 0.03em;
+        }
+        .responsive-table .table-row {
+          text-align: center;
+          background-color: #ffffff;
+          box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+        }
+        .responsive-table .col-1 {
+          flex-basis: 5%;
+        }
+        .responsive-table .col-2 {
+          flex-basis: 20%;
+        }
+        .responsive-table .col-3 {
+          flex-basis: 20%;
+        }
+        .responsive-table .col-4 {
+          flex-basis: 20%;
+        }
+        .responsive-table .col-5 {
+          flex-basis: 15%;
+        }
+        .responsive-table .col-6 {
+          flex-basis: 20%;
+        }
+        .responsive-table li {
+            border-radius: 3px;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+        .edit {
+          background-color: rgb(247, 28, 28);
+          border-radius: 9px;
+          border: 0;
+          box-sizing: border-box;
+          color: #eee;
+          cursor: pointer;
+          font-size: 14px;
+          height: 30px;
+          text-align: center;
+          width: 30%;
+        }
+
+        .edit:active {
+          background-color: rgb(247, 84, 35);
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h2>Members Table <small>Ajax Task</small></h2>
+
+        <div class="container">
+            <form @submit.prevent="submitForm()" class="form">
+                <div class="title">Member Form</div>
+                <div class="subtitle">Jadilan member baru!</div>
+                <ul v-if="errors.length">
+                    <li v-for="error in errors" style="color: darkred;">{{ error }}</li>
+                </ul>
+                <div class="input-container ic1">
+                  <input id="name" class="input" type="text" placeholder=" " v-model="name" ref="name" />
+                  <div class="cut"></div>
+                  <label for="name" class="placeholder">Name</label>
+                </div>
+                <div class="input-text-area-container ic2">
+                  <textarea id="address" class="input-text-area" placeholder=" " v-model="address" ref="address"> </textarea>
+                  <div class="cut"></div>
+                  <label for="address" class="placeholder">Address</label>
+                </div>
+                <div class="input-container ic2">
+                    <input id="no_hp" class="input" type="text" placeholder=" " v-model="no_hp" ref="name" ref="no_hp" />
+                    <div class="cut"></div>
+                    <label for="no_hp" class="placeholder">Phone Number</label>
+                </div>
+                <button type="submit" class="submit">submit</button>
+            </form>
+
+            <div class="table">
+                <ul class="responsive-table">
+                    <li class="table-header">
+                      <div class="col col-1">Id</div>
+                      <div class="col col-2">Photo Profile</div>
+                      <div class="col col-3">Member Name</div>
+                      <div class="col col-4">Address</div>
+                      <div class="col col-5">Phone Number</div>
+                      <div class="col col-6">Action</div>
+                    </li>
+                    <li class="table-row" v-for="member in members">
+                      <div class="col col-1" data-label="Id">{{ member.id }}</div>
+                      <div class="col col-2" data-label="Photo Profile">
+                          <img width=100 :src="member.photo_profile ? photoDomain + member.photo_profile : 'https://dummyimage.com/16:9x1080/'" alt="">
+                      </div>
+                      <div class="col col-3" data-label="Member Name">{{ member.name }}</div>
+                      <div class="col col-4" data-label="Address">{{ member.address }}</div>
+                      <div class="col col-5" data-label="Phone Number">{{ member.no_hp }}</div>
+                      <div class="col col-6" data-label="Action">
+                          <button class="edit">Edit</button>
+                      </div>
+                    </li>
+                </ul>
+            </div>
+
+            
+        </div>
+    </div>
+      
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+     var vm = new Vue({
+        el: '#app',
+        data: {
+            name : '',
+            address : '',
+            no_hp : '',
+            photo_profile : '',
+            members : [],
+            errors : [],
+            photoDomain : "http://demo-api-vue.sanbercloud.com"
+        },
+        methods : {
+            validationForm : function() {
+                this.errors = []
+
+                if (this.name < 5) {
+                    this.errors.push('Nama minimal mempunyai 5 karakter')
+                    this.$refs.name.focus()
+                }
+                if (this.address < 5) {
+                    this.errors.push('Addres minimal mempunyai 5 karakter')
+                    this.$refs.address.focus()
+                }
+                if (this.address > 255) {
+                    this.errors.push('Addres maksimal mempunyai 255 karakter')
+                    this.$refs.address.focus()
+                }
+                if (this.no_hp.toString().length < 11) {
+                    this.errors.push('Nomor Hp minimal mempunyai 11 karakter')
+                    this.$refs.no_hp.focus()
+                }
+                if (this.no_hp.toString().length > 13) {
+                    this.errors.push('Nomor Hp maksimal mempunyai 13 karakter')
+                    this.$refs.no_hp.focus()
+                }
+            },
+            clearData : function () {
+                this.name = ''
+                this.address = ''
+                this.no_hp = ''
+            },
+
+            submitForm : function () {
+                this.validationForm()
+                if (this.errors.length === 0) {
+                    let formData = new FormData()
+                    formData.append('name', this.name)
+                    formData.append('address', this.address)
+                    formData.append('no_hp', this.no_hp)
+
+                    const config = {
+                        method : "post",
+                        url : "http://demo-api-vue.sanbercloud.com/api/member",
+                        data : formData
+                    }
+
+                    axios(config)
+                        .then( (response) => {
+                            this.clearData()
+                            this.getMembers()
+                            alert(response.data.message)
+                        })
+                        .catch( (error) => {
+                            console.log(error)
+                        })
+                }
+            },
+
+            getMembers : function () {
+                const config = {
+                    method : "get",
+                    url : "http://demo-api-vue.sanbercloud.com/api/member"
+                }
+
+                axios(config)
+                    .then( (response) => {
+                        this.members = response.data.members
+                    })
+                    .catch( () => {
+                        console.log(error)
+                    })
+            }
+        },
+        created() {
+            this.getMembers()
+        }
+    })
+    </script>
+</body>
+</html>
