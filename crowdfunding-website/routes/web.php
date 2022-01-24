@@ -11,15 +11,4 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::middleware(['auth', 'verification'])->group(function () {
-    Route::get('/route-1', 'TestController@poin1');
-    Route::get('/route-2', 'TestController@poin2')->middleware('isAdmin');
-});
+Route::view('/{any?}', 'app')->where('any', '.*');

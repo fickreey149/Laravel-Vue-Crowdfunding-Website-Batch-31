@@ -21,7 +21,17 @@ Route::namespace('Auth')->group(function () {
     Route::post('/login', 'LoginController')->middleware('email-verify');
 });
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware(['api', 'auth:api'])->group(function () {
     Route::get('/get-profile', 'ProfileController@get_profile');
     Route::post('/update-profile', 'ProfileController@update_profile');
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'campaign'
+], function () {
+    Route::get('random/{count}', 'CampaignController@random');
+    Route::post('store', 'CampaignController@store');
+    Route::get('/', 'CampaignController@index');
+    Route::get('/{campaign}', 'CampaignController@detail');
 });
