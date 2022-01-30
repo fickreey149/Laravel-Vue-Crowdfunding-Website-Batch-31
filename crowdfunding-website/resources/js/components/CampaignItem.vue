@@ -14,9 +14,10 @@
 
             <v-card-actions>
                 <v-progress-linear
-                    v-model="progres"
-                    color="blue-gray"
+                    color="indigo darken-2"
+                    rounded
                     height="7"
+                    v-model="progres"
                 ></v-progress-linear>
             </v-card-actions>
 
@@ -24,7 +25,7 @@
                 <v-icon>mdi-cash</v-icon>
                 <span> Rp {{ campaign.required.toLocaleString('id-ID') }}</span>
                 <v-spacer></v-spacer>
-                <span> {{ progres }} </span>
+                <span> {{ progres + '%' }} </span>
             </v-card-actions>
         </v-card>
     </div>
@@ -37,7 +38,7 @@ export default {
     props: ['campaign'],
     computed:{
         progres() {
-            return (this.campaign.collected / this.campaign.required * 100)
+            return Math.floor(this.campaign.collected / this.campaign.required * 100)
         }
     }
 

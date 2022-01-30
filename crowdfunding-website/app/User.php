@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\UsesUuid;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -11,8 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable;
-
+    use Notifiable, UsesUuid;
 
     /**
      * The attributes that are mass assignable.
@@ -23,19 +23,9 @@ class User extends Authenticatable implements JWTSubject
         'name', 'username', 'email', 'password', 'role_id', 'photo'
     ];
 
-    protected $keyType = 'string';
-
-    public $incrementing = false;
-
     protected static function boot()
     {
         parent::boot();
-
-        static::creating(function ($model) {
-            if (empty($model->{$model->getKeyName()})) {
-                $model->{$model->getKeyName()} = Str::uuid();
-            }
-        });
 
         static::created(function ($model) {
             $model->generateOtpCode();

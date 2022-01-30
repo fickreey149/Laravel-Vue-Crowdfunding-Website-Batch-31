@@ -20,8 +20,9 @@ class CampaignController extends Controller
         ], 200);
     }
 
-    public function detail(Campaign $campaign)
+    public function detail($id)
     {
+        $campaign = Campaign::findOrFail($id);
         $data['campaign'] = $campaign;
 
         return response()->json([
@@ -52,12 +53,17 @@ class CampaignController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'image' => 'required|mimes:jpg,jpeg,png'
+            'image' => 'required|mimes:jpg,jpeg,png',
+            'address' => 'required',
+            'required' => 'required'
         ]);
 
         $campaign = Campaign::create([
             'title' => $request->title,
-            'description' => $request->description
+            'description' => $request->description,
+            'address' => $request->address,
+            'required' => $request->required,
+            'collected' => 0
         ]);
 
         if ($request->hasFile('image')) {
@@ -89,5 +95,20 @@ class CampaignController extends Controller
                 'data' => $data
             ]);
         }
+    }
+
+    public function search($keyword)
+    {
+        $campaigns = Campaign::select('*')
+            ->where('title', 'LIKE', '%' . $keyword . '%')
+            ->get();
+
+        $data['campaigns'] = $campaigns;
+
+        return response()->json([
+            'response_code' => '00',
+            'response_message' => 'Data campaigns berhasil ditampilkan',
+            'data' => $data
+        ], 200);
     }
 }

@@ -4,7 +4,7 @@
             <v-img
                 :src="campaign.image"
                 class="white--text"
-                height="200px"
+                max-height="500px"
             >
                 <v-card-title
                     class="fill-height align-end"
@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import { mapMutations, mapActions } from 'vuex'
+
 export default {
     data: () => ({
         campaign: {}
@@ -54,21 +56,38 @@ export default {
     methods: {
         go(){
             let {id} = this.$route.params
-            let url = 'api/campaign/'+id
-            console.log(url)
-            axios.get(url)
-                .then((response) => {
-                    let {data} = response.data
+
+            var config = {
+              method: 'get',
+              url: `/api/campaign/${id}`
+            };
+
+            axios(config)
+                .then((res) => {
+                    let { data } = res.data
                     this.campaign = data.campaign
-                    console.log(this.campaign)
                 })
                 .catch((error) => {
-                    let {response} = error
+                    let { response } = error
                     console.log(response)
                 })
         },
+
+        ...mapMutations({
+            tambahTransaksi : 'transaction/insert'
+        }),
+
+        ...mapActions({
+            setAlert : 'alert/set'
+        }),
+
         donate(){
-            alert('donate')
+            this.tambahTransaksi()
+            this.setAlert({
+                status : true,
+                color : 'success',
+                text : 'Transaksi berhasil ditambahkan'
+            })
         }
     }
 }

@@ -4,6 +4,7 @@ import Home from './views/Home.vue';
 import Donations from './views/Donations.vue';
 import Campaigns from './views/Campaigns.vue';
 import Campaign from './views/Campaign.vue';
+import Social from './views/Social.vue';
 
 
 Vue.use(Router)
@@ -31,6 +32,11 @@ const router = new Router({
             path : '/campaign/:id',
             name : 'campaign',
             component : Campaign
+        },
+        {
+            path : '/social/:provider/callback',
+            name : 'social',
+            component : Social
         },
         {
             path : '*',
